@@ -21,7 +21,7 @@
 
 
 /////////////////////////////////////////////////////////////
-//Классы созданные для проверки работы сериализации
+//РљР»Р°СЃСЃС‹ СЃРѕР·РґР°РЅРЅС‹Рµ РґР»СЏ РїСЂРѕРІРµСЂРєРё СЂР°Р±РѕС‚С‹ СЃРµСЂРёР°Р»РёР·Р°С†РёРё
 ////////////////////////////////////////////////////////////
 
 class simple_class
@@ -34,7 +34,7 @@ private:
 	{
 
 
-		// то же, что и make_nvp, только имя параметра выводится в макросе
+		//  С‚Рѕ Р¶Рµ, С‡С‚Рѕ Рё make_nvp, С‚РѕР»СЊРєРѕ РёРјСЏ РїР°СЂР°РјРµС‚СЂР° РІС‹РІРѕРґРёС‚СЃСЏ РІ РјР°РєСЂРѕСЃРµ
 		ar & BOOST_SERIALIZATION_NVP(FirstField);
 		ar & BOOST_SERIALIZATION_NVP(SecondField);
 	//	ar & BOOST_SERIALIZATION_NVP(ptr);
@@ -99,30 +99,30 @@ public:
 };
 
 
-// Функция загрузки в xml
+// Р¤СѓРЅРєС†РёСЏ Р·Р°РіСЂСѓР·РєРё РІ xml
 template<typename TIArch, typename TOArch, typename TClass>
 void Save(const std::string & file, int flags, const TClass & cont)
 {
  
-	{ // Сериализуем
+	{ //  РЎРµСЂРёР°Р»РёР·СѓРµРј
 		std::ofstream ofs(file.c_str(), std::ios::out|flags);
 		TOArch oa(ofs);
-		// make_nvp создаёт пару имя-значение, которая отразится в XML
-		// если не используем XML архив, то можно пару не создавать
+		//  make_nvp СЃРѕР·РґР°С‘С‚ РїР°СЂСѓ РёРјСЏ-Р·РЅР°С‡РµРЅРёРµ, РєРѕС‚РѕСЂР°СЏ РѕС‚СЂР°Р·РёС‚СЃСЏ РІ XML
+		// РµСЃР»Рё РЅРµ РёСЃРїРѕР»СЊР·СѓРµРј XML Р°СЂС…РёРІ, С‚Рѕ РјРѕР¶РЅРѕ РїР°СЂСѓ РЅРµ СЃРѕР·РґР°РІР°С‚СЊ
 		//oa << boost::serialization::make_nvp("Test_Object", cont); 
 
-		// Используем макрос для приведения в вид, пригодный для отображения в xml работает аналогично make_nvp
+		// РСЃРїРѕР»СЊР·СѓРµРј РјР°РєСЂРѕСЃ РґР»СЏ РїСЂРёРІРµРґРµРЅРёСЏ РІ РІРёРґ, РїСЂРёРіРѕРґРЅС‹Р№ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РІ xml СЂР°Р±РѕС‚Р°РµС‚ Р°РЅР°Р»РѕРіРёС‡РЅРѕ make_nvp
 		oa << BOOST_SERIALIZATION_NVP(cont);
 
 	}
 }
 
-// Функция выгрузки из xml
+// Р¤СѓРЅРєС†РёСЏ РІС‹РіСЂСѓР·РєРё РёР· xml
 template<typename TIArch, typename TOArch, typename TClass>
 void Load(const std::string & file, int flags, const TClass & cont)
 {
 	TClass newg; 
-	{ // Десериализуем
+	{ // Р”РµСЃРµСЂРёР°Р»РёР·СѓРµРј
 		std::ifstream ifs(file.c_str(), std::ios::in|flags);
 		TIArch ia(ifs);
 	//	ia >> boost::serialization::make_nvp("Test_Object",newg);
@@ -131,13 +131,13 @@ void Load(const std::string & file, int flags, const TClass & cont)
 }
 int _tmain(int argc, _TCHAR* argv[])
 {
-	simple_class sс(5,0.45f);
-	child_class ch(sс,sс,"hello");
+	simple_class sпїЅ(5,0.45f);
+	child_class ch(sпїЅ,sпїЅ,"hello");
 
 	std::ofstream ofs("filename");
 	using namespace boost::archive;
-	Save<xml_iarchive, xml_oarchive>("xml_arch.xml", 0, &ch);  // сериализуем в один файл
-	Load<xml_iarchive, xml_oarchive>("xml_arch.xml", 0, &ch);	// десериализуем
-	Save<xml_iarchive, xml_oarchive>("xml_arch2.xml", 0, &ch);	// сериализуем в другой файл, можем проверить соответствие
+	Save<xml_iarchive, xml_oarchive>("xml_arch.xml", 0, &ch);  // пїЅСЃРµСЂРёР°Р»РёР·СѓРµРј РІ РѕРґРёРЅ С„Р°Р№Р»
+	Load<xml_iarchive, xml_oarchive>("xml_arch.xml", 0, &ch);	// РґРµСЃРµСЂРёР°Р»РёР·СѓРµРј
+	Save<xml_iarchive, xml_oarchive>("xml_arch2.xml", 0, &ch);	// СЃРµСЂРёР°Р»РёР·СѓРµРј РІ РґСЂСѓРіРѕР№ С„Р°Р№Р», РјРѕР¶РµРј РїСЂРѕРІРµСЂРёС‚СЊ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ
 return 0;
 }
